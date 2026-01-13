@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirect</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+<script>
+  const tg = window.Telegram.WebApp;
+  tg.ready();
+
+  const url = new URLSearchParams(window.location.search).get("url");
+  if (url) {
+    window.location.replace(url);
+  } else {
+    document.body.innerText = "Invalid link";
+  }
+</script>
+</body>
+</html>
+
