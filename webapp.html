@@ -7,16 +7,37 @@
 </head>
 <body>
 <script>
-  const tg = window.Telegram.WebApp;
-  tg.ready();
+const tg = window.Telegram.WebApp;
+tg.ready();
 
-  const url = new URLSearchParams(window.location.search).get("url");
-  if (url) {
-    window.location.replace(url);
-  } else {
-    document.body.innerText = "Invalid link";
-  }
+const params = new URLSearchParams(window.location.search);
+const linkId = params.get("link");
+
+fetch("/api/event", {
+  method: "POST",
+  headers: {"Content-Type": "application/json"},
+  body: JSON.stringify({
+    type: "scan",
+    link_id: linkId,
+    initData: tg.initData
+  })
+});
+
+document.getElementById("open").onclick = () => {
+  fetch("/api/event", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      type: "click",
+      link_id: linkId,
+      initData: tg.initData
+    })
+  });
+
+  window.location.href = POST_URL;
+};
 </script>
 </body>
 </html>
+
 
